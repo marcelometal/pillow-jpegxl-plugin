@@ -30,7 +30,8 @@ dev = [
     "OpenEXR",
     "pre-commit",
     "pytest",
-    "pyexiv2",
+    # pyexiv2 publishes per-version wheels and no sdist, and has none for 3.15 yet.
+    "pyexiv2; python_version < '3.15'",
     "ruff",
 ]
 

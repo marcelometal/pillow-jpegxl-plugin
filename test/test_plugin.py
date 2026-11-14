@@ -3,7 +3,6 @@ import tempfile
 
 import numpy as np
 import OpenEXR
-import pyexiv2
 import pytest
 from PIL import Image
 
@@ -115,7 +114,7 @@ def test_metadata_decode_from_direct_decoding():
     assert img_ori.getexif() == img_jxl.getexif()
 
 
-def test_metadata_encode_from_jpg():
+def test_metadata_encode_from_jpg(pyexiv2):
     # Load a JPEG image
     ref_img_path = "test/images/metadata/1x1_exif_xmp.jpg"
     temp = tempfile.mktemp(suffix=".jxl")
@@ -129,7 +128,7 @@ def test_metadata_encode_from_jpg():
     assert img_ori_exiv2.read_exif() == img_enc_exiv2.read_exif()
 
 
-def test_metadata_encode_from_raw_exif():
+def test_metadata_encode_from_raw_exif(pyexiv2):
     with open("test/images/metadata/sample.exif", "rb") as f:
         ref_exif = f.read()
     img_ori = Image.open("test/images/sample.png")
@@ -141,7 +140,7 @@ def test_metadata_encode_from_raw_exif():
     assert ref_exif == jxl_exif
 
 
-def test_metadata_encode_from_pil_exif():
+def test_metadata_encode_from_pil_exif(pyexiv2):
     exif_img_path = "test/images/metadata/1x1_exif_xmp.jpg"
     dummy_img = Image.open("test/images/sample.png")
     exif_img = Image.open(exif_img_path)
